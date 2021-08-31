@@ -53,7 +53,8 @@ sleep 1s
 echo -e "creating input directory...\n"
 mkdir -p ~/storage/shared/dynpargsi
 echo -e "downloading template.zip...\n"
-curl -sS https://github.com/jayrfs/dynparGSI/blob/main/dynamic_device_template.zip?raw=true > /storage/shared/dynpargsi/dynamic_device_template.zip
+mkdir /storage/shared/dynpargsi/dynamic_device_template
+curl -sS https://github.com/jayrfs/dynparGSI/blob/main/dynamic_device_template.zip?raw=true > /storage/shared/dynpargsi/dynamic_device_template
 echo -e "unzipping template.zip...\n"
 unzip /storage/dynpargsi/dynamic_device_template.zip -d /storage/shared/dynpargsi/dynamic_device_template
 sleep 0.1s
