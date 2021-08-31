@@ -50,11 +50,14 @@ echo -e "\n\t\tversion 0.1\n"
 echo -e "\t\tby @jayrfs\n"
 echo -e "\thttps://github.com/jayrfs/dynparGSI\n"
 sleep 1s
-echo "creating input directory.."
-echo ""
-#mkdir -p ~/storage/shared/dynpargsi/input
+echo -e "creating input directory...\n"
+mkdir -p ~/storage/shared/dynpargsi
+echo -e "downloading template.zip...\n"
+curl -sS https://github.com/jayrfs/dynparGSI/blob/main/dynamic_device_template.zip?raw=true > /storage/dynpargsi/dynamic_device_template.zip
+echo -e "unzipping template.zip...\n"
+unzip /storage/dynpargsi/dynamic_device_template.zip -d /storage/dynpargsi/dynamic_device_template
 sleep 0.1s
-echo -e "input directory created at \n\n\t/storage/dynpargsi/images"
+echo -e "input directory created at \n\n\t/storage/dynpargsi/dynamic_device_template"
 echo -e "\nplease place the images there"
 echo ""
 sleep 0.1s
