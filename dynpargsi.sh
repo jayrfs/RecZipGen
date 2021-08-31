@@ -53,9 +53,9 @@ sleep 1s
 echo -e "creating input directory...\n"
 mkdir -p ~/storage/shared/dynpargsi
 echo -e "downloading template.zip...\n"
-curl -sS https://github.com/jayrfs/dynparGSI/blob/main/dynamic_device_template.zip?raw=true > /storage/dynpargsi/dynamic_device_template.zip
+curl -sS https://github.com/jayrfs/dynparGSI/blob/main/dynamic_device_template.zip?raw=true > /storage/shared/dynpargsi/dynamic_device_template.zip
 echo -e "unzipping template.zip...\n"
-unzip /storage/dynpargsi/dynamic_device_template.zip -d /storage/dynpargsi/dynamic_device_template
+unzip /storage/dynpargsi/dynamic_device_template.zip -d /storage/shared/dynpargsi/dynamic_device_template
 sleep 0.1s
 echo -e "input directory created at \n\n\t/storage/dynpargsi/dynamic_device_template"
 echo -e "\nplease place the images there"
