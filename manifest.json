@@ -1,0 +1,14 @@
+{
+    "name": "RecZipGen",
+    "version": "1.0",
+    "homepage": "https://github.com/jayrfs/RecZipGen",
+    "maintainer": "@jayrfs (santa)",
+    "description": "Android Recovery Flashable Zip Generator",
+    "arch": "all",
+    "depends": ["zip"],
+    "files" :{
+      "reczipgen.sh": "bin/reczipgen",
+      "README.md": "share/man/man1/README.md"
+    }
+  }
+  
