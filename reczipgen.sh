@@ -140,7 +140,7 @@ else
         echo -e "\r\nCopying files inside input folder..."
         for i in {1}; do for s in / - \ \|; do printf "\r$s";sleep .1;done;done
         echo -e "\r\nCalculating partition size..."
-        SYSIMGSIZE=$(stat -c%s "$HOME/storage/shared/reczipgen/input/system.img")
+        SYSIMGSIZE=$(find -- "$HOME/storage/shared/reczipgen/input/system.img" -printf '%b\n')
         echo -e "\r\nSystem partition is $SYSIMGSIZE bytes"
         for FILE in $HOME/storage/shared/reczipgen/input/*; 
         do zip -mj $HOME/reczipgen/template.zip $FILE
