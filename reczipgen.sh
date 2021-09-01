@@ -38,10 +38,12 @@ END
 
 # define vars
 DATE=$(date +"%Y%m%d-%H%M%S")
+DEVICENAME=`$getprop ro.product.device`
+PRODUCTNAME=`$getprop ro.build.product`
 
 # usefull stuff
 script=$(cat <<-END
-assert(getprop("ro.product.device") == "devicename" || getprop("ro.build.product") == "productname" || abort("E3004: This package is for devicename: ; this device is " + getprop("ro.product.device") + "."););
+assert(getprop("ro.product.device") == "$DEVICENAME" || getprop("ro.build.product") == "$PRODUCTNAME" || abort("E3004: This package is for $DEVICENAME: ; this device is " + getprop("ro.product.device") + "."););
 ifelse(is_mounted("/system"), unmount("/system"));
 ui_print("_______                         ");
 ui_print("< hello >                       ");
@@ -136,9 +138,10 @@ else
         echo -e "\r\nCopying files inside input folder..."
         for i in {1}; do for s in / - \ \|; do printf "\r$s";sleep .1;done;done
         echo -e "\r\nUpdating script..."
-        mkdir -p $HOME/reczipgen/META-INF/com/google/android
-        > $HOME/reczipgen/META-INF/com/google/android/updater-script cat <<< "$script"
-        zip -m $HOME/reczipgen/template.zip $HOME/reczipgen/META-INF/com/google/android/updater-script
+        > $HOME/reczipgen/updater-script cat <<< "$script"
+        mkdir -p META-INF/com/google/android/
+        cp $HOME/reczipgen/updater-script META-INF/com/google/android/updater-script
+        zip -mu $HOME/reczipgen/template.zip META-INF/com/google/android/updater-script
         echo -e "\r\nExporting zip..."
         for i in {1}; do for s in / - \ \|; do printf "\r$s";sleep .1;done;done
         mv $HOME/reczipgen/template.zip $HOME/storage/shared/reczipgen/recovery-flashable-$DATE.zip
