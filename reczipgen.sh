@@ -151,7 +151,7 @@ else
         cp $HOME/reczipgen/updater-script META-INF/com/google/android/updater-script
         zip -mu $HOME/reczipgen/template.zip META-INF/com/google/android/updater-script
         echo -e "\r\nCalculating partition size..."
-        SYSIMGSIZE=$(stat -c%s "$HOME/storage/shared/reczipgen/input/system.img")
+        SYSIMGSIZE=$(stat -c%s "~/storage/shared/reczipgen/input/system.img")
         echo -e "\r\nSystem partition is $SYSIMGSIZE bytes"
         echo -e "\r\nUpdating partition size..."
         for i in {1}; do for s in / - \ \|; do printf "\r$s";sleep .1;done;done
@@ -161,6 +161,7 @@ else
         for i in {1}; do for s in / - \ \|; do printf "\r$s";sleep .1;done;done
         mv $HOME/reczipgen/template.zip $HOME/storage/shared/reczipgen/recovery-flashable-$DATE.zip
         rm -rf $HOME/reczipgen/updater-script
+        rm -rf $HOME/META-INF
         rm -rf $HOME/reczipgen/dynamic_partitions_op_list
         rm -rf $HOME/storage/shared/reczipgen/input/
         echo -e "\r\nDone"
