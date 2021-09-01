@@ -71,14 +71,6 @@ set_progress(1.000000);
 END
 )
 
-partlist=$(cat <<-END
-# System-only build, keep original vendor partition
-# Resize partition system to $SYSIMGSIZE
-resize system $SYSIMGSIZE
-END
-)
-
-
 # .config file
 
 defconfig=$(cat <<-END
@@ -97,9 +89,9 @@ done <<< "$Banner"
 echo -e "\nRecovery flashable zip generator"
 for i in {1..3}; do for s in / - \ \|; do printf "\r$s";sleep .1;done;done
 echo -e "\r    "
-echo -e "\r\n\t\tversion 1\n"
-echo -e "\t\t  by @jayrfs\n"
-echo -e "\thttps://github.com/jayrfs/RecZipGen\n"
+echo -e "\r\n\tversion 1\n"
+echo -e "\tby @jayrfs\n"
+echo -e "https://github.com/jayrfs/RecZipGen\n"
 sleep 1s
 
 
@@ -118,14 +110,17 @@ if [ ! -f $HOME/reczipgen/dynamic_device_template.zip ]; then
     echo -e "\nExtracting template.zip!"
     cp $HOME/reczipgen/dynamic_device_template.zip -d $HOME/reczipgen/template.zip
     mkdir -p $HOME/storage/shared/reczipgen/input
-    echo -e "\rinput directory created at \n\ninternalstorage\reczipgen\input"
-    echo -e "\nplease place the images there and rerun this script"
+    echo -e "\r  "
+    echo -e "\rInput directory created!"
+    echo -e "\nplease place the images at"
+    echo "internalstorage\reczipgen\input"
+    echo "and rerun this script"
 else
     echo -e "\nSearching for Template.zip file...\n"
     for i in {1}; do for s in / - \ \|; do printf "\r$s";sleep .1;done;done
     echo -e "\r\rTemplate.zip file found!"
     for i in {1}; do for s in / - \ \|; do printf "\r$s";sleep .1;done;done
-    echo -e "\r\rChecking if input folder exists..."
+    echo -e "\r\rChecking if input folder exists...\n"
     for i in {1}; do for s in / - \ \|; do printf "\r$s";sleep .1;done;done
     if [ -z "$(ls -A $HOME/storage/shared/reczipgen/input/)" ]; then
         echo -e "\r\rInput folder does not exist!"
@@ -133,28 +128,42 @@ else
         for i in {1}; do for s in / - \ \|; do printf "\r$s";sleep .1;done;done
         cp $HOME/reczipgen/dynamic_device_template.zip -d $HOME/reczipgen/template.zip
         mkdir -p $HOME/storage/shared/reczipgen/input
-        echo -e "\rinput directory created at \n\n'internalstorage'\'reczipgen'\'input'"
-        echo -e "\nplease place the images there and rerun this script"
+        echo -e "\rInput directory created!"
+        echo -e "\nplease place the images at"
+        echo "internalstorage\reczipgen\input"
+        echo "and rerun this script"
     else
-        echo -e "\r\rInput folder found!"
+        echo -e "\r       "
+        echo -e "\r\nInput folder found!"
         echo -e "\r\nCopying files inside input folder..."
-        mv $HOME/storage/shared/reczipgen/input $HOME/reczipgen/tmp/
-        cd $HOME/reczipgen/tmp/ | ls
+        mkdir -p  $HOME/reczipgen/input
+        mv $HOME/storage/shared/reczipgen/input $HOME/reczipgen/
+        cd $HOME/reczipgen/input | ls
         for i in {1}; do for s in / - \ \|; do printf "\r$s";sleep .1;done;done
+        echo -e "\r  "
         echo -e "\r\nCalculating partition size..."
-        SYSIMGSIZE=$(stat -c%s "$HOME/reczipgen/tmp/input/system.img")
+        SYSIMGSIZE=$(stat -c%s "$HOME/reczipgen/input/system.img")
         echo -e "\r\nSystem partition is $SYSIMGSIZE bytes"
-        for FILE in $HOME/reczipgen/tmp/input/*; 
+
+        read -r -d '' partlist <<- EOM
+# System-only build, keep original vendor partition
+# Resize partition system to $SYSIMGSIZE
+resize system $SYSIMGSIZE
+EOM
+
+        for FILE in $HOME/reczipgen/input/*; 
         do zip -mj $HOME/reczipgen/template.zip $FILE
         done
         echo -e "\r\nCopying files inside input folder..."
         for i in {1}; do for s in / - \ \|; do printf "\r$s";sleep .1;done;done
+        echo -e "\r   "
         echo -e "\r\nUpdating script..."
         for i in {1}; do for s in / - \ \|; do printf "\r$s";sleep .1;done;done
         > $HOME/reczipgen/updater-script cat <<< "$script"
         mkdir -p META-INF/com/google/android/
         cp $HOME/reczipgen/updater-script META-INF/com/google/android/updater-script
         zip -mu $HOME/reczipgen/template.zip META-INF/com/google/android/updater-script
+        echo -e "\r   "
         echo -e "\r\nUpdating partition size..."
         for i in {1}; do for s in / - \ \|; do printf "\r$s";sleep .1;done;done
         > $HOME/reczipgen/dynamic_partitions_op_list cat <<< "$partlist"
@@ -162,11 +171,16 @@ else
         echo -e "\r\nExporting zip..."
         for i in {1}; do for s in / - \ \|; do printf "\r$s";sleep .1;done;done
         mv $HOME/reczipgen/template.zip $HOME/storage/shared/reczipgen/recovery-flashable-$DATE.zip
+        echo -e "recovery-flashable-$DATE.zip exported!"
+        echo -e "Cleaning up..."
+        mv $HOME/reczipgen/template.zip $HOME/storage/shared/reczipgen/recovery-flashable-$DATE.zip
+        echo -e "\r   "
         rm -rf $HOME/reczipgen/updater-script
         rm -rf $HOME/META-INF
         rm -rf $HOME/reczipgen/dynamic_partitions_op_list
         rm -rf $HOME/storage/shared/reczipgen/input/
-        echo -e "\r\nDone"
+        rm -rf $HOME/reczipgen/input/
     fi
 fi
-echo -e "\rdone"
+echo -e "\r  "
+echo -e "\rSUCCESS"
