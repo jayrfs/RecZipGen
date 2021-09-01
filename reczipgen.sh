@@ -41,9 +41,6 @@ DATE=$(date +"%Y%m%d-%H%M%S")
 DEVICENAME=$(getprop ro.product.device)
 PRODUCTNAME=$(getprop ro.build.product)
 
-echo $DEVICENAME
-echo $PRODUCTNAME
-
 # usefull stuff
 script=$(cat <<-END
 assert(getprop("ro.product.device") == "$DEVICENAME" || getprop("ro.build.product") == "$PRODUCTNAME" || abort("E3004: This package is for $DEVICENAME: ; this device is " + getprop("ro.product.device") + "."););
