@@ -139,6 +139,9 @@ else
         echo -e "\r\rInput folder found!"
         echo -e "\r\nCopying files inside input folder..."
         for i in {1}; do for s in / - \ \|; do printf "\r$s";sleep .1;done;done
+        echo -e "\r\nCalculating partition size..."
+        SYSIMGSIZE=$(stat -c%s "~/storage/shared/reczipgen/input/system.img")
+        echo -e "\r\nSystem partition is $SYSIMGSIZE bytes"
         for FILE in $HOME/storage/shared/reczipgen/input/*; 
         do zip -mj $HOME/reczipgen/template.zip $FILE
         done
@@ -150,9 +153,6 @@ else
         mkdir -p META-INF/com/google/android/
         cp $HOME/reczipgen/updater-script META-INF/com/google/android/updater-script
         zip -mu $HOME/reczipgen/template.zip META-INF/com/google/android/updater-script
-        echo -e "\r\nCalculating partition size..."
-        SYSIMGSIZE=$(stat -c%s "~/storage/shared/reczipgen/input/system.img")
-        echo -e "\r\nSystem partition is $SYSIMGSIZE bytes"
         echo -e "\r\nUpdating partition size..."
         for i in {1}; do for s in / - \ \|; do printf "\r$s";sleep .1;done;done
         > $HOME/reczipgen/dynamic_partitions_op_list cat <<< "$partlist"
