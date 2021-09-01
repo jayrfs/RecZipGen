@@ -139,6 +139,7 @@ else
         echo -e "\r\rInput folder found!"
         echo -e "\r\nCopying files inside input folder..."
         mv $HOME/storage/shared/reczipgen/ $HOME/reczipgen/tmp/
+        cd $HOME/reczipgen/tmp/ | ls
         for i in {1}; do for s in / - \ \|; do printf "\r$s";sleep .1;done;done
         echo -e "\r\nCalculating partition size..."
         SYSIMGSIZE=$(stat -c%s "$HOME/reczipgen/tmp/input/system.img")
