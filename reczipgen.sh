@@ -71,6 +71,13 @@ set_progress(1.000000);
 END
 )
 
+partlist=$(cat <<-END
+# System-only build, keep original vendor partition
+# Resize partition system to $SYSIMGSIZE
+resize system $SYSIMGSIZE
+END
+)
+
 
 # .config file
 
@@ -90,8 +97,8 @@ done <<< "$Banner"
 echo -e "\nRecovery flashable zip generator"
 for i in {1..3}; do for s in / - \ \|; do printf "\r$s";sleep .1;done;done
 echo -e "\r    "
-echo -e "\r\n\t\tversion 0.1\n"
-echo -e "\t\tby @jayrfs\n"
+echo -e "\r\n\t\tversion 1\n"
+echo -e "\t\t  by @jayrfs\n"
 echo -e "\thttps://github.com/jayrfs/RecZipGen\n"
 sleep 1s
 
@@ -138,13 +145,23 @@ else
         echo -e "\r\nCopying files inside input folder..."
         for i in {1}; do for s in / - \ \|; do printf "\r$s";sleep .1;done;done
         echo -e "\r\nUpdating script..."
+        for i in {1}; do for s in / - \ \|; do printf "\r$s";sleep .1;done;done
         > $HOME/reczipgen/updater-script cat <<< "$script"
         mkdir -p META-INF/com/google/android/
         cp $HOME/reczipgen/updater-script META-INF/com/google/android/updater-script
         zip -mu $HOME/reczipgen/template.zip META-INF/com/google/android/updater-script
+        echo -e "\r\nCalculating partition size..."
+        SYSIMGSIZE=$(stat -c%s "$HOME/storage/shared/reczipgen/input/system.img")
+        echo -e "\r\nSystem partition is $SYSIMGSIZE bytes"
+        echo -e "\r\nUpdating partition size..."
+        for i in {1}; do for s in / - \ \|; do printf "\r$s";sleep .1;done;done
+        > $HOME/reczipgen/dynamic_partitions_op_list cat <<< "$partlist"
+        zip -muj $HOME/reczipgen/template.zip $HOME/reczipgen/dynamic_partitions_op_list
         echo -e "\r\nExporting zip..."
         for i in {1}; do for s in / - \ \|; do printf "\r$s";sleep .1;done;done
         mv $HOME/reczipgen/template.zip $HOME/storage/shared/reczipgen/recovery-flashable-$DATE.zip
+        rm -rf $HOME/reczipgen/updater-script
+        rm -rf $HOME/reczipgen/dynamic_partitions_op_list
         rm -rf $HOME/storage/shared/reczipgen/input/
         echo -e "\r\nDone"
     fi
