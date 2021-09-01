@@ -38,8 +38,8 @@ END
 
 # define vars
 DATE=$(date +"%Y%m%d-%H%M%S")
-DEVICENAME=`$getprop ro.product.device`
-PRODUCTNAME=`$getprop ro.build.product`
+DEVICENAME=$(getprop ro.product.device)
+PRODUCTNAME=$(getprop ro.build.product)
 
 echo $DEVICENAME
 echo $PRODUCTNAME
