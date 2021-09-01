@@ -123,7 +123,7 @@ else
     echo -e "\r\rChecking if input folder exists...\n"
     for i in {1}; do for s in / - \ \|; do printf "\r$s";sleep .1;done;done
     if [ -z "$(ls -A $HOME/storage/shared/reczipgen/input/)" ]; then
-        echo -e "\r\rInput folder does not exist!"
+        echo -e "\r\nInput folder does not exist!"
         echo -e "\r\nCreating input folder..."
         for i in {1}; do for s in / - \ \|; do printf "\r$s";sleep .1;done;done
         cp $HOME/reczipgen/dynamic_device_template.zip -d $HOME/reczipgen/template.zip
@@ -183,4 +183,4 @@ EOM
     fi
 fi
 echo -e "\r  "
-echo -e "\rSUCCESS"
+echo -e "\rDone"
