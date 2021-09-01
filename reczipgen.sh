@@ -138,7 +138,7 @@ else
     else
         echo -e "\r\rInput folder found!"
         echo -e "\r\nCopying files inside input folder..."
-        mv $HOME/storage/shared/reczipgen/input $HOME/reczipgen/tmp/input
+        mv $HOME/storage/shared/reczipgen/input $HOME/reczipgen/tmp/
         cd $HOME/reczipgen/tmp/ | ls
         for i in {1}; do for s in / - \ \|; do printf "\r$s";sleep .1;done;done
         echo -e "\r\nCalculating partition size..."
