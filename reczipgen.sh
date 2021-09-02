@@ -1,5 +1,6 @@
 #!/bin/bash
 #cd $HOME/storage/shared/reczipgen/ && curl -LJOk https://github.com/jayrfs/reczipgen/files/7086572/dynamic_device_template.zip
+#branch dev
 
 # useless stuff
 
