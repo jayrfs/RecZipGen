@@ -112,6 +112,7 @@ if [ ! -f $HOME/reczipgen/dynamic_device_template.zip ]; then
     cp $HOME/reczipgen/dynamic_device_template.zip -d $HOME/reczipgen/template.zip
     mkdir -p $HOME/storage/shared/reczipgen/input
     cd $HOME/reczipgen/ && curl -LJOk https://raw.githubusercontent.com/jayrfs/RecZipGen/sparseimg/simg2img.py
+    chmod +x $HOME/reczipgen/simg2img.py
     echo -e "\nsimg2img.py downloaded!"
     echo -e "\n Attempting python2 install..."
     yes | pkg install python2
