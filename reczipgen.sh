@@ -155,6 +155,8 @@ else
         python2 $HOME/reczipgen/simg2img.py "$HOME/reczipgen/input/system2.img" "$HOME/reczipgen/input/system.img"
         rm -rf $HOME/storage/shared/reczipgen/input
         rm $HOME/reczipgen/input/system2.img
+        cd | echo "pwd " && pwd
+        cd | echo "ls " && ls
         ####
 
         echo -e "\r\nCalculating partition size..."
