@@ -89,7 +89,8 @@ done <<< "$Banner"
 echo -e "\nRecovery flashable zip generator"
 for i in {1..3}; do for s in / - \ \|; do printf "\r$s";sleep .1;done;done
 echo -e "\r    "
-echo -e "\r\n\tversion 1\n"
+echo -e "\r\n\tversion 2\n"
+echo -e "\r\n\t SPARSE IMAGE TEST 1\n"
 echo -e "\tby @jayrfs\n"
 echo -e "https://github.com/jayrfs/RecZipGen\n"
 sleep 1s
@@ -105,6 +106,7 @@ if [ ! -f $HOME/reczipgen/dynamic_device_template.zip ]; then
     for i in {1}; do for s in / - \ \|; do printf "\r$s";sleep .1;done;done
     echo -e "\r    "
     echo -e "\nDownloading Template.zip"
+    cd $HOME/reczipgen/ && curl -LJOk https://github.com/jayrfs/reczipgen/files/7086572/dynamic_device_template.zip
     cd $HOME/reczipgen/ && curl -LJOk https://github.com/jayrfs/reczipgen/files/7086572/dynamic_device_template.zip
     echo -e "\nTemplate.zip downloaded!"
     echo -e "\nExtracting template.zip!"
@@ -137,10 +139,15 @@ else
         echo -e "\r\nInput folder found!"
         echo -e "\r\nCopying files inside input folder..."
         mkdir -p  $HOME/reczipgen/input
-        mv $HOME/storage/shared/reczipgen/input $HOME/reczipgen/
-        cd $HOME/reczipgen/input | ls
         for i in {1}; do for s in / - \ \|; do printf "\r$s";sleep .1;done;done
         echo -e "\r  "
+        
+        #simg2img stuff here
+        echo -e "converting sparse image to raw image"
+        python2 ./simg2img.py "$HOME/storage/shared/reczipgen/input" "$HOME/reczipgen/input/system.img"
+        rm -rf $HOME/storage/shared/reczipgen/input
+        ####
+
         echo -e "\r\nCalculating partition size..."
         SYSIMGSIZE=$(stat -c%s "$HOME/reczipgen/input/system.img")
         echo -e "\r\nSystem partition is $SYSIMGSIZE bytes"
