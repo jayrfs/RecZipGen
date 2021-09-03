@@ -186,10 +186,9 @@ EOM
         zip -muj $HOME/reczipgen/template.zip $HOME/reczipgen/dynamic_partitions_op_list
         echo -e "\r\nExporting zip..."
         for i in {1}; do for s in / - \ \|; do printf "\r$s";sleep .1;done;done
-        mv $HOME/reczipgen/template.zip $HOME/storage/shared/reczipgen/recovery-flashable-$DATE.zip
+        mv $HOME/reczipgen/template.zip $HOME/storage/shared/reczipgen/RecZipGen-$DATE.zip
         echo -e "recovery-flashable-$DATE.zip exported!"
         echo -e "Cleaning up..."
-        mv $HOME/reczipgen/template.zip $HOME/storage/shared/reczipgen/recovery-flashable-$DATE.zip
         echo -e "\r   "
         rm -rf $HOME/reczipgen/updater-script
         rm -rf $HOME/META-INF
