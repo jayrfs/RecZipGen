@@ -107,11 +107,12 @@ if [ ! -f $HOME/reczipgen/dynamic_device_template.zip ]; then
     echo -e "\r    "
     echo -e "\nDownloading Template.zip"
     cd $HOME/reczipgen/ && curl -LJOk https://github.com/jayrfs/reczipgen/files/7086572/dynamic_device_template.zip
-    cd $HOME/reczipgen/ && curl -LJOk https://github.com/jayrfs/reczipgen/files/7086572/dynamic_device_template.zip
     echo -e "\nTemplate.zip downloaded!"
     echo -e "\nExtracting template.zip!"
     cp $HOME/reczipgen/dynamic_device_template.zip -d $HOME/reczipgen/template.zip
     mkdir -p $HOME/storage/shared/reczipgen/input
+    cd $HOME/reczipgen/ && curl -LJOk https://raw.githubusercontent.com/jayrfs/RecZipGen/sparseimg/simg2img.py
+    echo -e "\nsimg2img.py downloaded!"
     echo -e "\r  "
     echo -e "\rInput directory created!"
     echo -e "\nplease place the images at"
