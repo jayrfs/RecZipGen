@@ -113,6 +113,9 @@ if [ ! -f $HOME/reczipgen/dynamic_device_template.zip ]; then
     mkdir -p $HOME/storage/shared/reczipgen/input
     cd $HOME/reczipgen/ && curl -LJOk https://raw.githubusercontent.com/jayrfs/RecZipGen/sparseimg/simg2img.py
     echo -e "\nsimg2img.py downloaded!"
+    echo -e "\n Attempting python2 install..."
+    yes | pkg install python2
+    echo -e "\n Python2 exists!"
     echo -e "\r  "
     echo -e "\rInput directory created!"
     echo -e "\nplease place the images at"
