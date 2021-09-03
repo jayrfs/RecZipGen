@@ -155,8 +155,8 @@ else
         python2 $HOME/reczipgen/simg2img.py "$HOME/reczipgen/input/system2.img" "$HOME/reczipgen/input/system.img"
         rm -rf $HOME/storage/shared/reczipgen/input
         rm $HOME/reczipgen/input/system2.img
-        cd | echo "pwd " && pwd
-        cd | echo "ls " && ls
+        echo "pwd " && cd $HOME/reczipgen | pwd
+        echo "ls "  && cd $HOME/reczipgen | ls
         ####
 
         echo -e "\r\nCalculating partition size..."
@@ -192,11 +192,11 @@ EOM
         echo -e "recovery-flashable-$DATE.zip exported!"
         echo -e "Cleaning up..."
         echo -e "\r   "
-        rm -rf $HOME/reczipgen/updater-script
-        rm -rf $HOME/META-INF
-        rm -rf $HOME/reczipgen/dynamic_partitions_op_list
-        rm -rf $HOME/storage/shared/reczipgen/input/
-        rm -rf $HOME/reczipgen/input/
+        #rm -rf $HOME/reczipgen/updater-script
+        #rm -rf $HOME/META-INF
+        #rm -rf $HOME/reczipgen/dynamic_partitions_op_list
+        #rm -rf $HOME/storage/shared/reczipgen/input/
+        #rm -rf $HOME/reczipgen/input/
     fi
 fi
 echo -e "\r  "
