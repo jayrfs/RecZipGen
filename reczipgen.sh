@@ -149,7 +149,7 @@ else
         
         #simg2img stuff here
         echo -e "converting sparse image to raw image"
-        python2 ./simg2img.py "$HOME/storage/shared/reczipgen/input" "$HOME/reczipgen/input/system.img"
+        python2 $HOME/reczipgen/simg2img.py "$HOME/storage/shared/reczipgen/input" "$HOME/reczipgen/input/system.img"
         rm -rf $HOME/storage/shared/reczipgen/input
         ####
 
