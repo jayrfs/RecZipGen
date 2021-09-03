@@ -144,13 +144,17 @@ else
         echo -e "\r\nInput folder found!"
         echo -e "\r\nCopying files inside input folder..."
         mkdir -p  $HOME/reczipgen/input
+        mv $HOME/storage/shared/reczipgen/input $HOME/reczipgen/
+        mv $HOME/reczipgen/input/system.img $HOME/reczipgen/input/system2.img
+        cd $HOME/reczipgen/input | ls
         for i in {1}; do for s in / - \ \|; do printf "\r$s";sleep .1;done;done
         echo -e "\r  "
         
         #simg2img stuff here
         echo -e "converting sparse image to raw image"
-        python2 $HOME/reczipgen/simg2img.py "$HOME/storage/shared/reczipgen/input/system.img" "$HOME/reczipgen/input/system.img"
+        python2 $HOME/reczipgen/simg2img.py "$HOME/reczipgen/input/system2.img" "$HOME/reczipgen/input/system.img"
         rm -rf $HOME/storage/shared/reczipgen/input
+        rm $HOME/reczipgen/input/system2.img
         ####
 
         echo -e "\r\nCalculating partition size..."
