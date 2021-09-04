@@ -41,10 +41,12 @@ DATE=$(date +"%Y%m%d-%H%M%S")
 DEVICENAME=$(getprop ro.product.device)
 PRODUCTNAME=$(getprop ro.build.product)
 
+##additional stuff
+#assert(getprop("ro.product.device") == "$DEVICENAME" || getprop("ro.build.product") == "$PRODUCTNAME" || abort("E3004: This package is for $DEVICENAME: ; this device is " + getprop("ro.product.device") + "."););
+#ifelse(is_mounted("/system"), unmount("/system"));
+
 # usefull stuff
 script=$(cat <<-END
-assert(getprop("ro.product.device") == "$DEVICENAME" || getprop("ro.build.product") == "$PRODUCTNAME" || abort("E3004: This package is for $DEVICENAME: ; this device is " + getprop("ro.product.device") + "."););
-ifelse(is_mounted("/system"), unmount("/system"));
 ui_print("_______                         ");
 ui_print("< hello >                       ");
 ui_print(" -------                        ");
