@@ -90,7 +90,8 @@ done <<< "$Banner"
 echo -e "\nRecovery flashable zip generator"
 for i in {1..3}; do for s in / - \ \|; do printf "\r$s";sleep .1;done;done
 echo -e "\r    "
-echo -e "\r\n\tversion 1\n"
+echo -e "\r\n\tversion 2\n"
+echo -e "\r\n\t SPARSE IMAGE TEST 1\n"
 echo -e "\tby @jayrfs\n"
 echo -e "https://github.com/jayrfs/RecZipGen\n"
 sleep 1s
@@ -111,6 +112,12 @@ if [ ! -f $HOME/reczipgen/dynamic_device_template.zip ]; then
     echo -e "\nExtracting template.zip!"
     cp $HOME/reczipgen/dynamic_device_template.zip -d $HOME/reczipgen/template.zip
     mkdir -p $HOME/storage/shared/reczipgen/input
+    cd $HOME/reczipgen/ && curl -LJOk https://raw.githubusercontent.com/jayrfs/RecZipGen/sparseimg/simg2img.py
+    chmod +x $HOME/reczipgen/simg2img.py
+    echo -e "\nsimg2img.py downloaded!"
+    echo -e "\n Attempting python2 install..."
+    yes | pkg install python2
+    echo -e "\n Python2 exists!"
     echo -e "\r  "
     echo -e "\rInput directory created!"
     echo -e "\nplease place the images at"
@@ -139,9 +146,20 @@ else
         echo -e "\r\nCopying files inside input folder..."
         mkdir -p  $HOME/reczipgen/input
         mv $HOME/storage/shared/reczipgen/input $HOME/reczipgen/
+        mv $HOME/reczipgen/input/system.img $HOME/reczipgen/input/system2.img
         cd $HOME/reczipgen/input | ls
         for i in {1}; do for s in / - \ \|; do printf "\r$s";sleep .1;done;done
         echo -e "\r  "
+        
+        #simg2img stuff here
+        echo -e "converting sparse image to raw image"
+        python2 $HOME/reczipgen/simg2img.py "$HOME/reczipgen/input/system2.img" "$HOME/reczipgen/input/system.img"
+        rm -rf $HOME/storage/shared/reczipgen/input
+        rm $HOME/reczipgen/input/system2.img
+        echo "pwd " && cd $HOME/reczipgen | pwd
+        echo "ls "  && cd $HOME/reczipgen | ls
+        ####
+
         echo -e "\r\nCalculating partition size..."
         SYSIMGSIZE=$(stat -c%s "$HOME/reczipgen/input/system.img")
         echo -e "\r\nSystem partition is $SYSIMGSIZE bytes"
@@ -171,16 +189,15 @@ EOM
         zip -muj $HOME/reczipgen/template.zip $HOME/reczipgen/dynamic_partitions_op_list
         echo -e "\r\nExporting zip..."
         for i in {1}; do for s in / - \ \|; do printf "\r$s";sleep .1;done;done
-        mv $HOME/reczipgen/template.zip $HOME/storage/shared/reczipgen/recovery-flashable-$DATE.zip
+        mv $HOME/reczipgen/template.zip $HOME/storage/shared/reczipgen/RecZipGen-$DATE.zip
         echo -e "recovery-flashable-$DATE.zip exported!"
         echo -e "Cleaning up..."
-        mv $HOME/reczipgen/template.zip $HOME/storage/shared/reczipgen/recovery-flashable-$DATE.zip
         echo -e "\r   "
-        rm -rf $HOME/reczipgen/updater-script
-        rm -rf $HOME/META-INF
-        rm -rf $HOME/reczipgen/dynamic_partitions_op_list
-        rm -rf $HOME/storage/shared/reczipgen/input/
-        rm -rf $HOME/reczipgen/input/
+        #rm -rf $HOME/reczipgen/updater-script
+        #rm -rf $HOME/META-INF
+        #rm -rf $HOME/reczipgen/dynamic_partitions_op_list
+        #rm -rf $HOME/storage/shared/reczipgen/input/
+        #rm -rf $HOME/reczipgen/input/
     fi
 fi
 echo -e "\r  "
