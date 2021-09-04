@@ -46,7 +46,7 @@ class ext4_chunk_header:
 if len(sys.argv) > 1:  
     filename = sys.argv[1]  
 else:  
-    print("No file is designated")
+    print "No file is designated"
     sys.exit(1)
 ifd = open(filename, "rb")
   
@@ -55,7 +55,7 @@ ifd = open(filename, "rb")
 # get filelen  
 ifd.seek(0, 2)  
 file_len = ifd.tell()  
-print(file_len)  
+print file_len  
 ifd.seek(0, 0)  
   
 buf = ifd.read(28)  
@@ -66,13 +66,13 @@ EXT4_FILE_HEADER_MAGIC = 0xED26FF3A
 EXT4_CHUNK_HEADER_SIZE = 12  
   
 if file_header.magic != EXT4_FILE_HEADER_MAGIC:  
-    print("Not a compressed ext4 fileecho")
+    print "Not a compressed ext4 fileecho"
     sys.exit(1)
   
 #print "file_header chunks:%X%" % (file_header.total_chunks)
   
 total_chunks = file_header.total_chunks  
-print("total chunk = %d" %(total_chunks))
+print "total chunk = %d" %(total_chunks)
   
 ofd = open("tmp.img", "wb")
   
@@ -89,15 +89,15 @@ while total_chunks > 0:
     if chunk_header.type == 0xCAC1:  # raw type   
         data = ifd.read(chunk_header.total_size - EXT4_CHUNK_HEADER_SIZE)  
         if len(data) != (sector_size << 9):  
-            print("len data:%d, sector_size:%d" % (len(data), (sector_size << 9)))
+            print "len data:%d, sector_size:%d" % (len(data), (sector_size << 9))
             sys.exit(1)  
         else:  
-            print("len data:%d, sector_size:%d" % (len(data), sector_size << 9))
+            print "len data:%d, sector_size:%d" % (len(data), sector_size << 9)
             ofd.write(data)  
             output_len += len(data)  
             #print raw_chunk
-            print("write raw data in %d size %d n" % (sector_base, sector_size))
-            print("output len:%x" % (output_len))
+            print "write raw data in %d size %d n" % (sector_base, sector_size)
+            print "output len:%x" % (output_len)
   
             sector_base += sector_size  
     else:  
@@ -106,8 +106,8 @@ while total_chunks > 0:
             ofd.write(data)   
             output_len += len(data)  
             #print fill_chunk % n
-            print("chunk_size:%x" % (chunk_header.chunk_size))
-            print("output len:%x" % (output_len))
+            print "chunk_size:%x" % (chunk_header.chunk_size)
+            print "output len:%x" % (output_len)
             sector_base += sector_size  
         else:  
             if chunk_header.type == 0xCAC3:  # TYPE_DONT_CARE  
@@ -125,9 +125,9 @@ while total_chunks > 0:
                 sector_base += sector_size  
   
     total_chunks -= 1   
-    print("remain chunks = %d" % (total_chunks))
+    print "remain chunks = %d" % (total_chunks)
   
-print("write done")
+print "write done"
   
 ifd.close()  
 ofd.close()  
